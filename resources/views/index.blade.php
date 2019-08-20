@@ -16,9 +16,9 @@
   <a href="{{ route('create.cv') }}"><button class="btn btn-success" type="submit">Sukurti CV</button></a>
   <br/>
   <div class="filter-form">
-    <form method="post" action="{{route('filter.cv')}}">
+    <form method="get" action="{{route('filter.cv')}}">
     @csrf
-    @method('POST')
+    @method('GET')
         <div class="form-group">
               <label for="job">Darbo sritis</label>
               <select name="job" class="form-control">
@@ -68,5 +68,5 @@
   </table>
   </div>
 <div>
-{{ $cv->links() }}
+{{ $cv->links('index', ['cv' => $cv]) }}
 @endsection
