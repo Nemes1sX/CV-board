@@ -11,6 +11,8 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/create', 'CvController@createcv')->name('create.cv');
+Route::get('/','CvController@index')->name('index.cv');
+Route::get('/show/{id}', 'CvController@show')->name('show.cv');
+Route::post('/filter', 'CvController@filter')->name('filter.cv');
+Route::post('/create', 'CvController@store')->name('store.cv');
