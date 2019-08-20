@@ -68,4 +68,5 @@
   </table>
   </div>
 <div>
+{{ $cv->links() }}
 @endsection

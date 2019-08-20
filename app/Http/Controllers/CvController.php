@@ -55,8 +55,12 @@ class CvController extends Controller
 
   }
   public function filter(Request $request){
-    $request->input('jobs') != '' ? $cv = DB::table('cvs')->where('jobs' == $request->input('jobs'))->orderBy('created_at', 'desc')->paginate($request->input('paging'))  : null;
-    dd($cv);
+    $request->input('jobs') != '' ? $query = DB::table('cvs')->where('jobs', '=', $request->input('jobs'))->orderBy('created_at', 'desc') : null;
+
+    $query->paginate($request['paginate']);
+
+    $cv = $query->get();
+
     return view('index', compact('cv'));    
 
 
