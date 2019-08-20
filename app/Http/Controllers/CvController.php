@@ -17,12 +17,9 @@ class CvController extends Controller
 
     $request->validate =[
        'fullname' => 'required|regex:^[a-zA-Z\s]*$^',
-       'email' => 'required',
+       'email' => 'required|email',
        'cv' => 'required|file|mimes:doc,docx',     
     ];
-    if(!filter_var($request['email'], FILTER_VALIDATE_EMAIL)){
-        return redirect('/create')->with('error', 'Netinkamai įvestas el. pašto adresas');
-    }else{
         $files = $request->file('cv');
         $request->cv->storeAs('cv', $request->cv->getClientOriginalName());
         $filename = $request->cv->getClientOriginalName().$files->getClientOriginalExtension();
@@ -37,7 +34,7 @@ class CvController extends Controller
 
     
 
-  }
+  
   public function show($id)
   {
       $cv = Cv::find($id);
@@ -55,11 +52,11 @@ class CvController extends Controller
 
   }
   public function filter(Request $request){
-    $request->input('jobs') != '' ? $query = DB::table('cvs')->where('jobs', '=', $request->input('jobs'))->orderBy('created_at', 'desc') : null;
+    $request->input('job') != '' ? $cv = DB::table('cvs')->where('job', '=', $request->input('job'))->orderBy('created_at', 'desc')->paginate($request['paging']) : null;
 
-    $query->paginate($request['paginate']);
+    //$query->paginate($request['paging']);
 
-    $cv = $query->get();
+    //$cv = $query->get();
 
     return view('index', compact('cv'));    
 
