@@ -1,4 +1,4 @@
-@extends('cities.layout')
+@extends('layouts.layout')
 
 @section('content')
 <style>
@@ -12,43 +12,58 @@
       {{ session()->get('success') }}  
     </div><br />
   @endif
-  <a href="{{ route('cities.create') }}"><button class="btn btn-sucess" type="submit">Create</button></a>
+  
+  <a href="{{ route('create.cv') }}"><button class="btn btn-success" type="submit">Sukurti CV</button></a>
   <br/>
+  <div class="filter-form">
+    <form class="form-control">
+        <div class="form-group">
+              <label for="job">Darbo sritis</label>
+              <select name="job" class="form-control">
+                <option value="back-end">Back-end programuotojas</option>
+                <option value="front-end">Front-end programuotojas</option>
+                <option value="itengineer">IT inižinierius</option>
+              </select> 
+          </div>
+          <div class="form-group">
+              <label for="job">Rodyti įrašų po</label>
+              <select name="paging" class="form-control">
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="15">15</option>
+              </select> 
+          </div>
+          <button type="submit" class="btn btn-primary">Filtruoti</button>
+    </form>
+  </div>  
+  <br/>
+  <div class="record-table">
   <table class="table table-striped">
     <thead>
         <tr>
-          <td>ID</td>
-          <td>City</td>
-          <td>Region</td>
-          <td>Population</td>
-          <td colspan="2">Action</td>
+          <td>Vardas Pavardė</td>
+          <td>El. paštas</td>
+          <td>Darbo sritis</td>
+          <td>Paskelbimo data</td>
         </tr>
     </thead>
     <tbody>
-        @foreach($cities as $city)
+        @foreach($cv as $record)
         <tr>
-            <td>{{$city->id}}</td>
-            <td>{{$city->city}}</td>
-            <td>{{$city->region}}</td>
-            <td>{{$city->population}}</td>
-            <td><a href="{{ route('cities.edit', $city->id)}}" class="btn btn-primary">Edit</a></td>
-            <td>
-                <form action="{{ route('cities.destroy', $city->id)}}" method="post">
-                  @csrf
-                  @method('DELETE')
-                  <button class="btn btn-danger" type="submit">Delete</button>
-                </form>
-            </td>
+            <td><a href="{{route('show.cv', $record->id)}}">{{$record->fullname}}</a></td>
+            <td><a href="mailto:{{$record->email}}">{{$record->email}}</a></td>
+            <td>@if($record->job == 'frontend')
+                Front-end programuotojas
+                @elseif ($record->job == 'backend')
+                Back-end programuotojas
+                @else
+                IT inžinierius
+                @endif  </td>
+            <td>{{$record->created_at}}</td>
         </tr>
-        @endforeach
-        @foreach($totals as $total)
-          <tr class="bold">
-            <td>Regionas</td>
-            <td>{{$total->region}}</td>
-            <td>Viso gyventojų  {{$total->population_sum}}</td>
-          </tr>
         @endforeach
     </tbody>
   </table>
+  </div>
 <div>
 @endsection

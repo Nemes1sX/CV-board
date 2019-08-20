@@ -11,7 +11,7 @@ class CvController extends Controller
 {
   public function createcv(){
       
-    return view('cv.create');
+    return view('create');
   }
   public function store(Request $request){
 
@@ -20,18 +20,19 @@ class CvController extends Controller
        'email' => 'required',
        'cv' => 'required|file|mimes:doc,docx',     
     ];
-    if(!filter_email($request['email'], FILTER_VALIDATE_EMAIL)){
+    if(!filter_var($request['email'], FILTER_VALIDATE_EMAIL)){
         return redirect('/create')->with('error', 'Netinkamai įvestas el. pašto adresas');
     }else{
         $files = $request->file('cv');
-        $filename = $files->getClientOriginalExtension();
         $request->cv->storeAs('cv', $request->cv->getClientOriginalName());
+        $filename = $request->cv->getClientOriginalName().$files->getClientOriginalExtension();
       $data = Cv::create([  
         'fullname' => $request['fullname'],
         'email' => $request['email'],
-        'jobs' => $request['jobs'],
-        'cv' => storage_path('app/public/logos/'.$filename),
+        'job' => $request['job'],
+        'cv' =>  storage_path('app\public\cv'.'/'.$filename),
       ]);
+      return redirect('/');
     }
 
     
@@ -50,15 +51,15 @@ class CvController extends Controller
                 ->paginate(10);
 
 
-    return view('index.cv', compact('cv'));
+    return view('index', compact('cv'));
 
   }
   public function filter(Request $request){
     if($request->input('jobs') != '')
         $query = Product::where('jobs', '=', $request->input('jobs'));
-    $query->orederBy('created_at', 'desc')->paginate(10);       
+    $query->orederBy('created_at', 'desc')->paginate($request->input(['paging']));       
     $cv = $query->get();
-    return view('index.cv', compact('cv'));    
+    return view('index', compact('cv'));    
 
 
 

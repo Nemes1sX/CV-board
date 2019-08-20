@@ -1,4 +1,4 @@
-@extends('layout.layout')
+@extends('layouts.layout')
 
 @section('content')
 <style>
@@ -20,26 +20,26 @@
         </ul>
       </div><br />
     @endif
-      <form method="post" action="{{ route('cv.store') }}" enctype="multipart/form-data">
+      <form method="post" action="{{ route('store.cv') }}" enctype="multipart/form-data">
           @csrf
           <div class="form-group">    
-              <label for="name">Vardas Pavardė</label>
+              <label for="fullname">Vardas Pavardė</label>
               <input type="text" class="form-control" name="fullname"/>
           </div>
           <div class="form-group">
-              <label for="price">El. paštas</label>
-              <input type="text" class="form-control" name="region"/>
+              <label for="email">El. paštas</label>
+              <input type="text" class="form-control" name="email"/>
           </div>
           <div class="form-group">
               <label for="job">Darbo sritis</label>
               <select name="job" class="form-control">
-                <option value="back-end">Back-end programuotojas</option>
-                <option value="front-end">Front-end programuotojas</option>
+                <option value="backend">Back-end programuotojas</option>
+                <option value="frontend">Front-end programuotojas</option>
                 <option value="itengineer">IT inižinierius</option>
               </select> 
           </div>
           <div class="form-group">
-              <label for="price">CV failas</label>
+              <label for="file">CV failas</label>
               <input type="file" name="cv" class="form-control"/>
           </div>
           <button type="submit" class="btn btn-primary">Įkelti</button>

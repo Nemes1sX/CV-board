@@ -18,7 +18,6 @@
   <link href="{{ asset('css/shopping.css') }}" rel="stylesheet" type="text/css" />
 </head>
 <body>
-  @include('partials.header')
   <div class="container">
     @yield('content')
   </div>
