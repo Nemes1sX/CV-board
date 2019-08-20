@@ -1,3 +1,6 @@
+@extends('layouts.layout')
+
+@section('content')
 <div class="card">
   <div class="card-header">
     {{$cv->fullname}}
@@ -5,9 +8,9 @@
   <div class="card-body">
     <h5 class="card-title">Vardas Pavardė: {{ $cv->fullname}}</h5>
     <p class="card-text">El. paštas: {{$cv->email}}</p>
-    <p class="card-text">Darbo sritis: @if($record->job == 'frontend')
+    <p class="card-text">Darbo sritis: @if($cv->job == 'frontend')
                 Front-end programuotojas
-                @elseif ($record->job == 'backend')
+                @elseif ($cv->job == 'backend')
                 Back-end programuotojas
                 @else
                 IT inžinierius
@@ -16,4 +19,4 @@
     <a href="{{url ('/')}}" class="btn btn-primary">Grįžti</a>
   </div>
 </div>
-@endsect
+@endsection

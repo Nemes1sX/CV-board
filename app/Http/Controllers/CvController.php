@@ -42,7 +42,7 @@ class CvController extends Controller
   {
       $cv = Cv::find($id);
 
-      return view('cv.show', compact('cv'));//
+      return view('show', compact('cv'));//
   }
   public function index(){
        
@@ -55,10 +55,8 @@ class CvController extends Controller
 
   }
   public function filter(Request $request){
-    if($request->input('jobs') != '')
-        $query = Product::where('jobs', '=', $request->input('jobs'));
-    $query->orederBy('created_at', 'desc')->paginate($request->input(['paging']));       
-    $cv = $query->get();
+    $request->input('jobs') != '' ? $cv = DB::table('cvs')->where('jobs' == $request->input('jobs'))->orderBy('created_at', 'desc')->paginate($request->input('paging'))  : null;
+    dd($cv);
     return view('index', compact('cv'));    
 
 

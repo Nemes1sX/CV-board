@@ -16,12 +16,14 @@
   <a href="{{ route('create.cv') }}"><button class="btn btn-success" type="submit">Sukurti CV</button></a>
   <br/>
   <div class="filter-form">
-    <form class="form-control">
+    <form method="post" action="{{route('filter.cv')}}">
+    @csrf
+    @method('POST')
         <div class="form-group">
               <label for="job">Darbo sritis</label>
               <select name="job" class="form-control">
-                <option value="back-end">Back-end programuotojas</option>
-                <option value="front-end">Front-end programuotojas</option>
+                <option value="backend">Back-end programuotojas</option>
+                <option value="frontend">Front-end programuotojas</option>
                 <option value="itengineer">IT inižinierius</option>
               </select> 
           </div>
@@ -31,8 +33,8 @@
                 <option value="5">5</option>
                 <option value="10">10</option>
                 <option value="15">15</option>
-              </select> 
-          </div>
+              </select>
+          </div>    
           <button type="submit" class="btn btn-primary">Filtruoti</button>
     </form>
   </div>  
@@ -50,7 +52,7 @@
     <tbody>
         @foreach($cv as $record)
         <tr>
-            <td><a href="{{route('show.cv', $record->id)}}">{{$record->fullname}}</a></td>
+            <td><a href="{{ route('show.cv', $record->id) }}">{{$record->fullname}}</a></td>
             <td><a href="mailto:{{$record->email}}">{{$record->email}}</a></td>
             <td>@if($record->job == 'frontend')
                 Front-end programuotojas
