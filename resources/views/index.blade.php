@@ -50,7 +50,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach($cv as $record)
+      @foreach($cv as $record) 
         <tr>
             <td><a href="{{ route('show.cv', $record->id) }}">{{$record->fullname}}</a></td>
             <td><a href="mailto:{{$record->email}}">{{$record->email}}</a></td>
@@ -63,10 +63,10 @@
                 @endif  </td>
             <td>{{$record->created_at}}</td>
         </tr>
-        @endforeach
+        @endforeach 
     </tbody>
   </table>
   </div>
 <div>
-{{ $cv->links('index', ['cv' => $cv]) }}
+{{ $cv->links() }}
 @endsection

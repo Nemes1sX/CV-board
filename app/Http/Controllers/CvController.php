@@ -7,6 +7,8 @@ use App\Cv;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
+//php
+
 class CvController extends Controller
 {
   public function createcv(){
@@ -22,7 +24,7 @@ class CvController extends Controller
     ];
         $files = $request->file('cv');
         $request->cv->storeAs('cv', $request->cv->getClientOriginalName());
-        $filename = $request->cv->getClientOriginalName().$files->getClientOriginalExtension();
+        $filename = $request->cv->getClientOriginalName().'.'.$files->getClientOriginalExtension();
       $data = Cv::create([  
         'fullname' => $request['fullname'],
         'email' => $request['email'],
@@ -45,14 +47,14 @@ class CvController extends Controller
        
     $cv = DB::table('cvs')
                 ->orderBy('created_at', 'desc')
-                ->paginate(10);
-
+                ->paginate(5)
+  ;
 
     return view('index', compact('cv'));
 
   }
   public function filter(Request $request){
-    $request->input('job') != '' ? $cv = DB::table('cvs')->where('job', '=', $request->input('job'))->orderBy('created_at', 'desc')->paginate($request['paging']) : null;
+   $cv = DB::table('cvs')->where('job', '=', $request->input('job'))->orderBy('created_at', 'desc')->paginate($request['paging']);
 
     return view('index', compact('cv'));    
 
