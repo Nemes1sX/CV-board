@@ -16,6 +16,14 @@
 
   <link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css" />
   <link href="{{ asset('css/shopping.css') }}" rel="stylesheet" type="text/css" />
+  <style>
+  .uper {
+    margin-top: 40px;
+  }
+  h1{
+    text-align: center;
+  }
+</style>
 </head>
 <body>
   <div class="container">

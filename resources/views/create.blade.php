@@ -1,14 +1,10 @@
 @extends('layouts.layout')
 
 @section('content')
-<style>
-  .uper {
-    margin-top: 40px;
-  }
-</style>
+<h1>Patalpinti savo CV </h1>
 <div class="card uper">
   <div class="card-header">
-    Add Share
+    Patalpinti savo CV
   </div>
   <div class="card-body">
     @if ($errors->any())

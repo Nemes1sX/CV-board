@@ -1,11 +1,7 @@
 @extends('layouts.layout')
 
 @section('content')
-<style>
-  .uper {
-    margin-top: 40px;
-  }
-</style>
+<h1>CV lenta </h1>
 <div class="uper">
   @if(session()->get('success'))
     <div class="alert alert-success">
