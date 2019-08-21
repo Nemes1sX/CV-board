@@ -41,7 +41,7 @@ class CvController extends Controller
   {
       $cv = Cv::find($id);
 
-      return view('show', compact('cv'));//
+      return view('show', compact('cv'));
   }
   public function index(){
        
