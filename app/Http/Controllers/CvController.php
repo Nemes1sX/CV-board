@@ -47,8 +47,7 @@ class CvController extends Controller
        
     $cv = DB::table('cvs')
                 ->orderBy('created_at', 'desc')
-                ->paginate(10)
-  ;
+                ->paginate(10);
 
     return view('index', compact('cv'));
 
