@@ -13,23 +13,23 @@ class CvController extends Controller
 {
   public function createcv(){
       
-    return view('create');
+    return view('create'); //Return CV post form
   }
   public function store(Request $request){
 
-    $request->validate =[
+    $request->validate =[ 
        'fullname' => 'required|regex:^[a-zA-Z\s]*$^',
        'email' => 'required|email',
        'cv' => 'required|file|mimes:doc,docx',     
     ];
         $files = $request->file('cv');
-        $request->cv->storeAs('cv', $request->cv->getClientOriginalName());
+        $request->cv->storeAs('cv', $request->cv->getClientOriginalName()); //Storing uploaded cv files to storage/app/cv folder
         $filename = $request->cv->getClientOriginalName().'.'.$files->getClientOriginalExtension();
       $data = Cv::create([  
         'fullname' => $request['fullname'],
         'email' => $request['email'],
         'job' => $request['job'],
-        'cv' =>  storage_path('app\public\cv'.'/'.$filename),
+        'cv' =>  storage_path('app/public/cv'.'/'.$filename),
       ]);
       return redirect('/');
     }
@@ -37,13 +37,13 @@ class CvController extends Controller
     
 
   
-  public function show($id)
+  public function show($id) //View selected posted info 
   {
       $cv = Cv::find($id);
 
-      return view('show', compact('cv'));
+      return view('show', compact('cv')); 
   }
-  public function index(){
+  public function index(){ //Fetch all records, 10 records per page
        
     $cv = DB::table('cvs')
                 ->orderBy('created_at', 'desc')
@@ -52,7 +52,7 @@ class CvController extends Controller
     return view('index', compact('cv'));
 
   }
-  public function filter(Request $request){
+  public function filter(Request $request){ //Filtrr and paging depending from params
 
     $cv = DB::table('cvs')->where('job', '=', $request->input('job'))->orderBy('created_at', 'desc')->paginate($request['paging']);
 
